@@ -1,0 +1,30 @@
+{% extends "layout/basic.html" %}
+{% block title %}Добавление объявления{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <ul>
+                    <li><em>{{ error|escape }}</em></li>
+                </ul>
+            {% endfor %}
+        {% endif %}
+
+        {% for field in form.visible_fields %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <ul>
+                        <li><em>{{ error|escape }}</em></li>
+                    </ul>
+                {% endfor %}
+            {% endif %}
+            <p> {{ field.label_tag }}<br>{{ field }}<br>{{ field.help_text }}</p>
+        {% endfor %}
+        <p><input type="submit" value="Добавить"></p>
+    </form>
+{% endblock %}

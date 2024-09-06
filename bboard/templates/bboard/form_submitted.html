@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submitted</title>
+</head>
+<body>
+    <h1>Thank You!</h1>
+    <p>Your form has been successfully submitted.</p>
+    <p><strong>Name:</strong> {{ form.cleaned_data.name }}</p>
+    <p><strong>Email:</strong> {{ form.cleaned_data.email }}</p>
+    <p><strong>Message:</strong> {{ form.cleaned_data.message }}</p>
+    <a href="{% url 'simple_form' %}">Submit another response</a>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends "layout/basic.html" %}
+{% comment %} {% block content %}
+    <p>URL главной страницы: {{ url1 }}</p>
+    {% for bb in bbs %}
+        <div>
+            <p>## {{ forloop.counter }}</p>
+            <h2>{{ bb.title }}</h2>
+            <p>{{ bb.content }}</p>
+            <p><a href="/bboard/{{ bb.pk }}">{{ bb.name }}</a></p>
+            <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+            {% url 'bboard:detail' bb.pk as detail_url %}
+        </div>
+    {% endfor %} {% endcomment %}
+
+    {% comment %} <div>
+        {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number }}">&lt;</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        {% endif %}
+        Часть #{{ page.number }} из {{ page.paginator.num_pages }}
+        {% if page.has_next %}
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="?page={{ page.next_page_number }}">&gt;</a>
+        {% endif %}
+    </div> {% endcomment %}
+
+    {% comment %} <div>
+        {% for num in page.paginator.page_range %}
+            {% if num == page.number %}
+                <strong>{{ num }}</strong>
+            {% else %}
+                <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+            {% if not forloop.last %}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %} {% endcomment %}
+
+{% block content %}
+    <h1>Список постов</h1>
+    {% for bb in bbs %}
+        <div>
+            <h2>{{ bb.title }}</h2>
+            <p>{{ bb.body }}</p>
+        </div>
+    {% endfor %}
+
+    <div>
+        {% if page_num > 1 %}
+        <a href="?page={{ page_num|add:-1 }}">&lt; Предыдущая</a>
+        {% endif %}
+        Страница {{ page_num }} из {{ total_pages }}
+        {% if page_num < total_pages %}
+        <a href="?page={{ page_num|add:1 }}">Следующая &gt;</a>
+        {% endif %}
+    </div>
+{% endblock %}
